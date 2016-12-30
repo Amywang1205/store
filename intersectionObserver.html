@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box{
+				width: 200px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				top: 2300px;
+				left: 0;
+			}
+			body{
+				height: 4000px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var
+				ele = document.getElementById("box"),
+				ob = new IntersectionObserver(
+					changes => {
+						for(const change of changes) {
+							// Timestamp when the change occurred
+							console.log(change.time);  
+							// Unclipped area of root
+						    console.log(change.rootBounds);
+						    // target.boundingClientRect()
+						    console.log(change.boundingClientRect); 
+						    // boundingClientRect, clipped by its containing block ancestors, and intersected with rootBounds
+						    console.log(change.intersectionRect); 
+						    // Ratio of intersectionRect area to boundingClientRect area
+						    console.log(change.intersectionRatio);
+						    // the Element target
+						    console.log(change.target);             
+						}
+					},
+					{
+						threshold: [1],
+						root: document.querySelector('body'),
+						rootMargin: "100px"
+					}
+				);
+			//共触发两次，进入可视区和离开可视区
+			ob.observe(ele);
+			var a = ob.takeRecords();
+			console.dir(a);
+		</script>
+	</body>
+</html>
